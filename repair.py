@@ -193,16 +193,16 @@ def main():
                     else:
                         print("Skipping")
                     print()
-                elif args.mode == 'symlink':
+                elif args.season_packs and args.mode == 'symlink':
                     realPaths = [os.path.realpath(item.path) for item in childItems]
                     parentFolders = set(os.path.dirname(path) for path in realPaths)
                     if childId in media.fullyAvailableChildrenIds and len(parentFolders) > 1:
                         if not args.season_packs:
                             season_pack_pending_messages[media.title][childId].extend(realPaths)
                         elif args.season_packs:
-                            [print(path) for path in realPaths]
                             print_section(f"Searching for season-pack for {media.title} (Season {childId})", "-")
-                            if not args.dry_run:
+                            [print(path) for path in realPaths]
+                            if not args.dry_run and (args.no_confirm or input("Do you want to initiate a search for a season-pack? (y/n): ").lower() == 'y'):
                                 results = arr.automaticSearch(media, childId)
                                 runAsyncInThread(checkAutomaticSearchStatus(arr, results['id'], media.title, childId))
 
