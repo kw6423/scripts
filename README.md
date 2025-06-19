@@ -10,7 +10,7 @@
 1. Clone the repository (preferably into the home directory):
 
    ```bash
-   git clone https://github.com/westsurname/scripts.git
+   git clone https://github.com/kw6423/scripts.git
    ```
 
 2. Navigate to the project directory:

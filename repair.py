@@ -193,7 +193,7 @@ def main():
                     else:
                         print("Skipping")
                     print()
-                elif args.season_packs and args.mode == 'symlink':
+                elif args.mode == 'symlink':
                     realPaths = [os.path.realpath(item.path) for item in childItems]
                     parentFolders = set(os.path.dirname(path) for path in realPaths)
                     if childId in media.fullyAvailableChildrenIds and len(parentFolders) > 1:
