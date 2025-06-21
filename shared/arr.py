@@ -302,7 +302,7 @@ class Arr(ABC):
         pageSizeParam = f"pageSize={pageSize}&" if pageSize else ''
         includeGrandchildDetailsParam = f"include{self.grandchildName}=true&" if includeGrandchildDetails else ''
         idParam = f"{self.endpoint}Id={media.id}&" if media else ''
-        childIdParam = f"{self.childIdName}={childId}&" if media and childId != None and childId != media.id else ''
+        childIdParam = f"{self.childIdName}={childId}&" if media and childId != None and self.childIdName != None else ''
         response = retryRequest(lambda: requests.get(f"{self.host}/api/v3/history{endpoint}?{pageSizeParam}{includeGrandchildDetailsParam}{idParam}{childIdParam}apiKey={self.apiKey}"))
         
         history = response.json()
@@ -316,7 +316,7 @@ class Arr(ABC):
         retryRequest(lambda: requests.post(f"{self.host}/api/v3/command?apiKey={self.apiKey}", json={'name': 'RefreshMonitoredDownloads'}, headers={'Content-Type': 'application/json'}))
 
     def interactiveSearch(self, media: Media, childId: int):
-        response = retryRequest(lambda: requests.get(f"{self.host}/api/v3/release?apiKey={self.apiKey}&{self.endpoint}Id={media.id}{f'&{self.childIdName}={childId}' if childId != media.id else ''}"))
+        response = retryRequest(lambda: requests.get(f"{self.host}/api/v3/release?apiKey={self.apiKey}&{self.endpoint}Id={media.id}{f'&{self.childIdName}={childId}' if self.childIdName != None else ''}"))
         return response.json()
 
     def automaticSearch(self, media: Media, childId: int):
